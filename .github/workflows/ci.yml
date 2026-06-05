@@ -1,0 +1,25 @@
+name: CI
+
+on:
+  push:
+    branches: [main, stg]
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment to deploy to'
+        required: true
+        default: staging
+        type: choice
+        options: [staging, production]
+
+jobs:
+  ci:
+    uses: mohamedmagdy122/reusable-backend-ci/.github/workflows/reusable-backend-ci.yml@main
+    with:
+      dotnet-version: '10.0.x'
+      project-path: Order.API/Order.API.csproj
+      test-path: Order.API.Tests/Order.API.Tests.csproj
+      run-tests: true
+      image-name: order-api
+      environment: ${{ github.event.inputs.environment || 'staging' }}
+    secrets: inherit
