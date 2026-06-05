@@ -12,6 +12,10 @@ on:
         type: choice
         options: [staging, production]
 
+permissions:
+  contents: read
+  packages: write
+
 jobs:
   ci:
     uses: mohamedmagdy122/reusable-backend-ci/.github/workflows/reusable-backend-ci.yml@main
